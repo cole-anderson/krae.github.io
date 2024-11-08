@@ -1,0 +1,48 @@
+---
+layout: page
+title: "Gallery"
+permalink: /gallery/
+---
+
+<h1>{{ page.title }}</h1>
+<div class="gallery">
+    {% assign gallery_folder = "assets/images/gallery" %}
+    {% for file in site.static_files %}
+    {% if file.path contains gallery_folder %}
+    <div class="gallery-item">
+        <img src="{{ file.path | relative_url }}" alt="{{ file.name }}"
+            onclick="openLightbox('{{ file.path | relative_url }}')">
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close">&times;</span>
+    <img id="lightbox-img" src="" alt="Large view">
+</div>
+<style>
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+</style>
+<script>
+    function openLightbox(imageSrc) {
+        document.getElementById("lightbox").style.display = "flex";
+        document.getElementById("lightbox-img").src = imageSrc;
+    }
+
+    function closeLightbox() {
+        document.getElementById("lightbox").style.display = "none";
+    }
+</script>
